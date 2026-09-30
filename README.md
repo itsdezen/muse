@@ -1,18 +1,18 @@
-# Remi
+# Muse
 
-Chief-of-staff agent identity, portable across coding agents (Claude Code, Codex, OpenCode). This repo defines who Remi is and what tools it can operate — loaded automatically whenever a coding agent runs here. Portability is structural, not aspirational: Claude Code, Codex, and OpenCode all read `AGENTS.md` natively (OpenCode: project-level, then a global `~/.config/opencode/AGENTS.md`), so this repo's `AGENTS.md`-first layout needs no per-agent entry file.
+Chief-of-staff agent identity, portable across coding agents (Claude Code, Codex, OpenCode). This repo defines who Muse is and what tools it can operate — loaded automatically whenever a coding agent runs here. Portability is structural, not aspirational: Claude Code, Codex, and OpenCode all read `AGENTS.md` natively (OpenCode: project-level, then a global `~/.config/opencode/AGENTS.md`), so this repo's `AGENTS.md`-first layout needs no per-agent entry file.
 
 Built on progressive disclosure: entry points (`AGENTS.md`, `SKILL.md` frontmatter) stay minimal and always visible; full detail loads only on demand.
 
 ## Structure
 
-- `identity.md` — Remi's name, personality, and role.
+- `identity.md` — Muse's name, personality, and role.
 - `AGENTS.md` — entry point read at session start; pulls in identity.
-- `.agents/skills/<tool>/SKILL.md` — tools Remi can operate (e.g. `herdr`), plain markdown readable by any coding agent.
+- `.agents/skills/<tool>/SKILL.md` — tools Muse can operate (e.g. `herdr`), plain markdown readable by any coding agent.
 
 ## Projects
 
-Each project's own repo is the source of truth for its context — Remi re-orients from its `AGENTS.md`, README, and git log directly. Projects live under `~/Developer` by default (see `identity.md`).
+Each project's own repo is the source of truth for its context — Muse re-orients from its `AGENTS.md`, README, and git log directly. Projects live under `~/Developer` by default (see `identity.md`).
 
 ## Adding a tool
 
