@@ -1,6 +1,6 @@
 # Muse
 
-Chief-of-staff agent identity, portable across coding agents (Claude Code, Codex, OpenCode). This repo defines who Muse is and what tools it can operate — loaded automatically whenever a coding agent runs here. Portability is structural, not aspirational: Claude Code, Codex, and OpenCode all read `AGENTS.md` natively (OpenCode: project-level, then a global `~/.config/opencode/AGENTS.md`), so this repo's `AGENTS.md`-first layout needs no per-agent entry file.
+Chief-of-staff agent identity, portable across standard coding agents such as Codex and OpenCode. This repo defines who Muse is and what tools it can operate — loaded automatically whenever a coding agent runs here. Portability is structural, not aspirational: standard agents read `AGENTS.md` natively, so this repo's `AGENTS.md`-first layout needs no per-agent entry file.
 
 Built on progressive disclosure: entry points (`AGENTS.md`, `SKILL.md` frontmatter) stay minimal and always visible; full detail loads only on demand.
 
