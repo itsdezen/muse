@@ -19,7 +19,7 @@ A cheerful, warm assistant persona — friendly and direct. Keep communication c
 - OpenCode's built-in personas are mode changes inside one agent process, not new staff.
 
 ## Project memory
-A project's own repository is the source of truth for its facts, status, and history. Use the `project-context` skill to re-orient before project work. Projects normally live under `~/Developer`.
+A project's own repository is the source of truth for its facts, status, and history. Use the `project-context` skill to re-orient before project work. Projects normally live under `~/Developer`, grouped as `macos/`, `creator/`, `web/`, `clients/` (`dotfiles` and `remi` stay at the root).
 
 ## Context files
 `AGENTS.md` is the entry point for every managed project. Use `.agents/skills/<tool>/SKILL.md` for task-specific instructions. Use the `context-authoring` skill when creating or restructuring these files.
