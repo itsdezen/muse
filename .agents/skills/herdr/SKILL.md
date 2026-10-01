@@ -18,9 +18,10 @@ Run `herdr status` first. If the server is not running, ask before starting a pe
 - Record the current Muse pane ID when it is known (`MUSE_PANE_ID` or the launcher integration's pane metadata). Exclude that exact pane so Muse is not counted as staff.
 - If the current pane ID is unavailable, mark current-session identity as unverified and report pane-level findings without claiming an exact staff count.
 - Use the pane ID as the canonical target. A name is reliable only when it is the explicit name passed to `herdr agent start`; the detected CLI kind shown by `agent list` is not necessarily a target name.
-- Before starting OpenCode staff, run `opencode debug config`. Start it with the scoped profile: `herdr agent start <name> --kind opencode --pane <pane_id> -- --agent staff`. The `staff` profile requires `edit` and `bash` approval without changing Muse's own runtime permissions.
+- Start OpenCode staff with its native Build agent. Normal mode asks before edits and shell commands. `--auto` auto-approves every request and is effectively full access, not a safety classifier.
 - Keep staff scope narrow. Leave commits, pushes, deploys, and destructive commands to Muse unless explicitly assigned.
-- Use a separate worktree when multiple staff members may make uncommitted changes in the same repository; a shared pane cwd is safe only for read-only work or one writer at a time.
+- Use `--auto` only when the user explicitly approves an unattended run in a trusted repository. OpenCode does not sandbox shell commands, so a worktree makes source changes recoverable but does not contain system, network, credential, push, or deployment effects.
+- Run unattended or concurrent write-capable staff in a dedicated worktree. Muse decides scope before launch and reviews the final diff afterward.
 
 ## Survey → narrow → inspect → act
 
@@ -38,15 +39,17 @@ Run `herdr status` first. If the server is not running, ask before starting a pe
 
 ## Starting staff
 
-- `herdr pane split --pane <pane_id> --direction right|down --cwd <project-path>`
-- `herdr agent start <name> --kind <kind> --pane <new-pane-id>`
+- For isolated work, run `herdr worktree create --cwd <project-path> --branch <name> --base <ref> --no-focus`; use the returned `root_pane.pane_id` directly rather than splitting another pane.
+- For supervised work that does not need isolation, create a pane with `herdr pane split --pane <muse-pane-id> --direction right|down --cwd <project-path>`.
+- Supervised OpenCode: `herdr agent start <name> --kind opencode --pane <staff-pane-id> -- --agent build`
+- User-approved full access: `herdr agent start <name> --kind opencode --pane <staff-pane-id> -- --agent build --auto`
 - For multi-checkpoint work, set stable metadata: `herdr pane report-metadata <pane_id> --source muse --display-agent "<label>" --token task=<slug>`.
 - Choose the model from the installed provider configuration. OpenCode model IDs use `provider/model`; verify authentication before assuming an ID.
 - Use `herdr agent attach <target> [--takeover]` when the user wants direct keyboard control.
 
 ## Completion and cleanup
 
-After reading the final output, verify `git status --short` (and the diff when edits were allowed), then close completed staff panes with `herdr pane close <pane_id>`. Never close a `working` or `blocked` pane without confirmation or explicit user direction. Clear metadata before reusing a long-lived pane.
+After reading the final output, verify `git status --short` and the complete diff, then close completed staff panes with `herdr pane close <pane_id>`. Never close a `working` or `blocked` pane without confirmation or explicit user direction. Clear metadata before reusing a long-lived pane.
 
 ## Reference commands
 

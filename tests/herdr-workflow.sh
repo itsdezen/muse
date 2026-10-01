@@ -18,7 +18,7 @@ assert_contains "$skill" '--until idle --until blocked --until done --until unkn
 assert_contains "$skill" '--wait --until idle --until done --until blocked --timeout 120000'
 assert_contains "$skill" 'agent prompt <pane_id>'
 assert_contains "$skill" 'agent send-keys'
-assert_contains "$skill" 'opencode debug config'
+assert_contains "$skill" '--agent build --auto'
 assert_contains "$skill" 'herdr pane close <pane_id>'
 
 status=$(herdr status)
@@ -29,15 +29,5 @@ help=$(herdr agent prompt --help)
 assert_contains "$help" '--timeout <MS>'
 assert_contains "$help" 'idle'
 assert_contains "$help" 'blocked'
-
-config=$(opencode debug config)
-CONFIG="$config" python3 - <<'PY'
-import json
-import os
-
-config = json.loads(os.environ["CONFIG"])
-assert config["agent"]["staff"]["permission"]["edit"] == "ask"
-assert config["agent"]["staff"]["permission"]["bash"] == "ask"
-PY
 
 printf 'herdr workflow checks passed\n'
